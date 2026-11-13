@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Rolling Stone Beach 2026 – Timetable</title>
+<meta name="description" content="Timetable Rolling Stone Beach 2026, 13. & 14. November 2026, Weissenhäuser Strand – alle vier Bühnen im Zeitraster mit Überschneidungen.">
+<meta name="theme-color" content="#06161b">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700;900&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #05090b;
+    --bg-2: #0b2730;
+    --ink: #f4eed3;
+    --ink-dim: #a9b4b2;
+    --line: rgba(244, 238, 211, .10);
+    --line-strong: rgba(244, 238, 211, .22);
+
+    --zelt: #f3ecc4;
+    --baltic: #2a8ba6;
+    --alm: #d93b33;
+    --moewe: #a8a8a8;
+    --sonst: #a9c7a4;
+
+    --axis: 46px;
+    --ppm: 1.15;            /* Pixel pro Minute */
+    --head-h: 46px;
+    --radius: 4px;
+    --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+    --display: "Playfair Display", Georgia, serif;
+  }
+  @media (max-width: 720px) {
+    :root { --axis: 34px; --ppm: 1.55; --head-h: 52px; }
+  }
+  @media (max-width: 380px) {
+    :root { --axis: 30px; --ppm: 1.7; }
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background:
+      radial-gradient(120% 60% at 30% 0%, #0f3a46 0%, transparent 60%),
+      radial-gradient(80% 40% at 100% 10%, #0a2a33 0%, transparent 70%),
+      var(--bg);
+    background-attachment: fixed;
+    color: var(--ink);
+    font-family: var(--serif);
+    line-height: 1.25;
+  }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 24px 24px 120px; }
+  @media (max-width: 720px) { .wrap { padding: 16px 12px 120px; } }
+
+  /* ---------- Kopf ---------- */
+  header.top { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 8px 24px; margin-bottom: 20px; }
+  .brand { font-family: var(--display); font-weight: 900; font-style: italic; font-size: clamp(22px, 4vw, 34px); letter-spacing: -.01em; margin: 0; }
+  .meta { font-size: clamp(12px, 1.6vw, 15px); color: var(--ink-dim); text-transform: uppercase; letter-spacing: .04em; margin-top: 4px; }
+  h1 { font-family: var(--display); font-weight: 700; font-size: clamp(30px, 7vw, 68px); line-height: .95; margin: 0; letter-spacing: -.01em; }
+
+  /* ---------- Tabs ---------- */
+  .controls { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .tabs { display: inline-flex; border: 1px solid var(--line-strong); border-radius: 999px; padding: 3px; background: rgba(0,0,0,.35); }
+  .tab {
+    appearance: none; border: 0; background: transparent; color: var(--ink-dim);
+    font: 600 15px/1 var(--serif); text-transform: uppercase; letter-spacing: .06em;
+    padding: 10px 18px; border-radius: 999px; cursor: pointer;
+  }
+  .tab small { font-weight: 400; opacity: .8; margin-left: 4px; }
+  .tab[aria-selected="true"] { background: var(--ink); color: #0b1a1e; }
+  .tab:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .hint { font-size: 13px; color: var(--ink-dim); margin: 0; }
+
+  /* ---------- Raster ---------- */
+  .grid { position: relative; border: 1px solid var(--line-strong); border-radius: 6px; background: rgba(2, 10, 13, .55); }
+  .grid-head {
+    position: sticky; top: 0; z-index: 20;
+    display: grid; grid-template-columns: var(--axis) repeat(4, minmax(0, 1fr));
+    background: rgba(5, 12, 15, .94); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--line-strong); border-radius: 6px 6px 0 0;
+  }
+  .stage-head {
+    min-height: var(--head-h); display: flex; align-items: center; padding: 6px 8px;
+    border-left: 1px solid var(--line);
+  }
+  .stage-head span {
+    display: inline-block; background: var(--c); color: #0b1a1e;
+    font: 700 clamp(11px, 1.8vw, 20px)/1.05 var(--display); text-transform: uppercase;
+    padding: 4px 8px; letter-spacing: .01em; hyphens: auto; -webkit-hyphens: auto;
+  }
+  .stage-head[data-stage="baltic"] span, .stage-head[data-stage="alm"] span { color: #fff; }
+  @media (max-width: 720px) { .stage-head { padding: 4px 3px; } .stage-head span { padding: 3px 4px; } }
+
+  .grid-body {
+    position: relative;
+    display: grid; grid-template-columns: var(--axis) repeat(4, minmax(0, 1fr));
+    height: calc(var(--span) * var(--ppm) * 1px + 16px);
+  }
+  .axis { position: relative; }
+  .hour {
+    position: absolute; left: 0; right: 4px; transform: translateY(-50%);
+    font-size: 12px; color: var(--ink-dim); text-align: right; font-variant-numeric: tabular-nums;
+  }
+  @media (max-width: 720px) { .hour { font-size: 10px; right: 3px; } }
+  .lane {
+    position: relative; border-left: 1px solid var(--line);
+    background-image:
+      repeating-linear-gradient(to bottom, var(--line-strong) 0 1px, transparent 1px calc(var(--ppm) * 60px)),
+      repeating-linear-gradient(to bottom, transparent 0 calc(var(--ppm) * 30px), var(--line) calc(var(--ppm) * 30px) calc(var(--ppm) * 30px + 1px), transparent calc(var(--ppm) * 30px + 1px) calc(var(--ppm) * 60px));
+    background-position: 0 calc(var(--offset) * var(--ppm) * 1px + 8px);
+  }
+
+  .slot {
+    position: absolute; left: 4px; right: 4px;
+    top: calc(var(--s) * var(--ppm) * 1px + 8px + 1px);
+    height: calc(var(--d) * var(--ppm) * 1px - 2px);
+    appearance: none; text-align: left; cursor: pointer; overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--c) 55%, transparent);
+    border-left: 4px solid var(--c);
+    border-radius: var(--radius);
+    background: color-mix(in srgb, var(--c) 16%, #061114);
+    color: var(--ink); font-family: var(--serif);
+    padding: 5px 7px 5px 8px;
+    display: flex; flex-direction: column; gap: 2px;
+    transition: opacity .15s, box-shadow .15s, transform .15s, background .15s;
+  }
+  .slot:hover { background: color-mix(in srgb, var(--c) 28%, #061114); }
+  .slot:focus-visible { outline: 2px solid var(--ink); outline-offset: 1px; z-index: 5; }
+  .slot .t { font-size: 12px; color: var(--ink-dim); font-variant-numeric: tabular-nums; }
+  .slot .n { font: 700 14px/1.1 var(--display); text-transform: uppercase; letter-spacing: .01em; overflow-wrap: anywhere; hyphens: auto; -webkit-hyphens: auto; }
+  .slot .x { overflow-wrap: anywhere; font-size: 11px; text-transform: uppercase; color: var(--ink-dim); letter-spacing: .03em; }
+  .slot .ov {
+    position: absolute; right: 4px; bottom: 4px;
+    font-size: 10px; line-height: 1; padding: 3px 5px; border-radius: 999px;
+    background: rgba(0,0,0,.45); color: var(--ink-dim); border: 1px solid var(--line-strong);
+  }
+  @media (max-width: 720px) {
+    .slot { left: 2px; right: 2px; padding: 4px 4px 4px 5px; border-left-width: 3px; }
+    .slot .t { font-size: 10px; }
+    .slot .n { font-size: 11.5px; }
+    .slot .x { font-size: 9px; }
+    .slot .ov { display: none; }
+  }
+
+  /* Überschneidungs-Modus */
+  .grid.focus .slot { opacity: .28; }
+  .grid.focus .slot.is-active { opacity: 1; box-shadow: 0 0 0 2px var(--ink); z-index: 4; }
+  .grid.focus .slot.is-parallel { opacity: 1; box-shadow: 0 0 0 2px var(--c); z-index: 3; }
+  .band {
+    position: absolute; left: var(--axis); right: 0; z-index: 1; pointer-events: none;
+    background: rgba(244, 238, 211, .07);
+    border-top: 1px dashed var(--line-strong); border-bottom: 1px dashed var(--line-strong);
+    display: none;
+  }
+  .grid.focus .band { display: block; }
+
+  .slot.is-live::after {
+    content: "LIVE"; position: absolute; top: 4px; right: 4px;
+    font: 700 9px/1 var(--serif); letter-spacing: .08em; padding: 3px 5px; border-radius: 3px;
+    background: var(--alm); color: #fff;
+  }
+
+  .now {
+    position: absolute; left: 0; right: 0; z-index: 10; pointer-events: none;
+    border-top: 2px solid var(--alm);
+  }
+  .now span {
+    position: absolute; left: 0; top: -9px;
+    background: var(--alm); color: #fff; font-size: 10px; font-weight: 600;
+    padding: 2px 4px; border-radius: 3px; font-variant-numeric: tabular-nums;
+  }
+
+  /* ---------- Sonstige ---------- */
+  .extra { margin-top: 22px; }
+  .extra h2 {
+    display: inline-block; margin: 0 0 10px; background: var(--sonst); color: #0b1a1e;
+    font: 700 clamp(16px, 2.2vw, 22px)/1.1 var(--display); text-transform: uppercase; padding: 4px 10px;
+  }
+  .extra-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; }
+  .extra .slot { position: relative; inset: auto; top: auto; left: auto; right: auto; height: auto; width: 100%; padding: 10px 12px; }
+  .extra .slot .ov { display: inline-block; position: static; align-self: flex-start; margin-top: 4px; }
+
+  /* ---------- Detail-Panel ---------- */
+  .panel {
+    position: fixed; left: 50%; bottom: 12px; z-index: 50;
+    width: min(560px, calc(100% - 24px)); transform: translate(-50%, calc(100% + 24px));
+    background: #0a1a1f; border: 1px solid var(--line-strong); border-top: 4px solid var(--c, var(--ink));
+    border-radius: 8px; box-shadow: 0 20px 50px rgba(0,0,0,.6);
+    padding: 14px 16px 16px; transition: transform .22s ease, visibility .22s;
+    max-height: 70vh; overflow: auto; visibility: hidden;
+  }
+  .panel.open { transform: translate(-50%, 0); visibility: visible; }
+  .panel .close {
+    position: absolute; top: 8px; right: 8px; width: 34px; height: 34px;
+    border: 1px solid var(--line-strong); border-radius: 50%; background: transparent; color: var(--ink);
+    font-size: 18px; cursor: pointer; line-height: 1;
+  }
+  .panel .stage { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--c); font-weight: 600; }
+  .panel h3 { margin: 4px 40px 2px 0; font: 700 22px/1.1 var(--display); text-transform: uppercase; }
+  .panel .when { color: var(--ink-dim); font-size: 14px; font-variant-numeric: tabular-nums; }
+  .panel h4 { margin: 14px 0 6px; font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-dim); font-weight: 600; }
+  .panel ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+  .panel li {
+    display: grid; grid-template-columns: 10px 1fr auto; gap: 4px 10px; align-items: baseline;
+    padding: 8px 10px; border-radius: 6px; background: rgba(255,255,255,.04); cursor: pointer;
+  }
+  .panel li:hover { background: rgba(255,255,255,.08); }
+  .panel li .dot { width: 10px; height: 10px; border-radius: 2px; background: var(--c); align-self: center; }
+  .panel li .nm { font-weight: 600; text-transform: uppercase; font-size: 14px; }
+  .panel li .sg { grid-column: 2; font-size: 12px; color: var(--ink-dim); }
+  .panel li .tm { font-size: 12px; color: var(--ink-dim); font-variant-numeric: tabular-nums; text-align: right; }
+  .panel li .om { grid-column: 3; font-size: 11px; color: var(--ink); text-align: right; white-space: nowrap; }
+  .panel .none { color: var(--ink-dim); font-size: 14px; margin: 0; }
+
+  footer { margin-top: 28px; font-size: 12px; color: var(--ink-dim); text-align: center; }
+
+  @media (prefers-reduced-motion: reduce) { .slot, .panel { transition: none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div>
+      <p class="brand">Rolling Stone Beach 2026</p>
+      <div class="meta">13. &amp; 14. November 2026 · Weissenhäuser Strand</div>
+    </div>
+    <h1>Timetable 2026</h1>
+  </header>
+
+  <div class="controls">
+    <div class="tabs" role="tablist" aria-label="Festivaltag">
+      <button class="tab" role="tab" data-day="fr" aria-selected="true">Freitag<small>13.11.</small></button>
+      <button class="tab" role="tab" data-day="sa" aria-selected="false">Samstag<small>14.11.</small></button>
+    </div>
+    <p class="hint">Act antippen, um parallel laufende Acts auf den anderen Bühnen zu sehen.</p>
+  </div>
+
+  <section class="grid" id="grid" aria-label="Zeitplan">
+    <div class="grid-head" id="grid-head"></div>
+    <div class="grid-body" id="grid-body"></div>
+  </section>
+
+  <section class="extra" id="extra" hidden>
+    <h2>Sonstige</h2>
+    <div class="extra-list" id="extra-list"></div>
+  </section>
+
+  <footer>Alle Angaben ohne Gewähr · Zeiten nach Mitternacht gehören zum jeweiligen Festivalabend.</footer>
+</div>
+
+<aside class="panel" id="panel" aria-live="polite" aria-hidden="true">
+  <button class="close" id="panel-close" aria-label="Schließen">×</button>
+  <div id="panel-content"></div>
+</aside>
+
+<script>
+const STAGES = [
+  { id: "zelt",   name: "Zeltbühne",       color: "var(--zelt)" },
+  { id: "baltic", name: "Baltic Festsaal", color: "var(--baltic)" },
+  { id: "alm",    name: "Alm",             color: "var(--alm)" },
+  { id: "moewe",  name: "Möwenbräu",       color: "var(--moewe)" },
+];
+const EXTRA_STAGE = { id: "sonst", name: "Sonstige", color: "var(--sonst)" };
+
+const DAYS = {
+  fr: {
+    label: "Freitag, 13.11.2026", date: "2026-11-13",
+    acts: {
+      zelt: [
+        ["17:15", "18:45", "Oh My God! It’s The Church"],
+        ["19:15", "20:45", "Moneybrother"],
+        ["21:30", "22:45", "Razorlight"],
+        ["23:30", "01:00", "The Jesus and Mary Chain"],
+      ],
+      baltic: [
+        ["18:45", "19:45", "Sharp Pins"],
+        ["20:45", "22:00", "Herrenmagazin"],
+        ["22:45", "00:00", "Tortoise"],
+      ],
+      alm: [
+        ["18:45", "19:45", "Philippa Kinsky"],
+        ["20:45", "21:45", "Blair Davie"],
+        ["22:45", "23:45", "Agatha Is Dead!"],
+      ],
+      moewe: [
+        ["18:45", "19:45", "The K’s"],
+        ["20:45", "21:45", "Flower Face"],
+        ["22:45", "23:45", "Really Good Time"],
+        ["00:30", "04:00", "Dagny Danger & DJ Radieschen", "Aftershow Party"],
+      ],
+    },
+    extra: [],
+  },
+  sa: {
+    label: "Samstag, 14.11.2026", date: "2026-11-14",
+    acts: {
+      zelt: [
+        ["16:30", "17:30", "Personal Trainer"],
+        ["18:00", "19:15", "Ash"],
+        ["20:00", "21:00", "The Wallflowers:", "Bringing Down the Horse"],
+        ["21:45", "22:45", "The Wallflowers:", "Tom Petty and the Heartbreakers"],
+        ["23:30", "01:00", "The Notwist"],
+      ],
+      baltic: [
+        ["17:30", "18:30", "The Haunted Youth"],
+        ["19:15", "20:15", "International Music"],
+        ["21:00", "21:45", "Warhaus"],
+        ["22:45", "00:00", "Kula Shaker"],
+      ],
+      alm: [
+        ["12:30", "13:30", "Talk-Runde Rolling Stone"],
+        ["14:00", "15:30", "Pop Quiz"],
+        ["17:30", "18:30", "Ise"],
+        ["19:15", "20:15", "Martin Luke Brown"],
+        ["21:00", "22:00", "Kiwi Jr"],
+        ["22:45", "23:45", "Dolphin Love"],
+      ],
+      moewe: [
+        ["12:00", "13:30", "Manuel Bittorf", "Lesung"],
+        ["14:00", "15:30", "Maik Brüggemeyer & Jan Jekal", "Lesung"],
+        ["16:00", "17:30", "Birgit Fuss & Max Gösche", "Lesung"],
+        ["19:15", "20:15", "Die Heiterkeit"],
+        ["21:00", "22:00", "Sofy"],
+        ["22:45", "23:45", "Marathon"],
+        ["00:30", "04:00", "Gold Soundz", "Aftershow Party"],
+      ],
+    },
+    extra: [
+      ["14:45", "15:30", "Matze Rossi", "Strandkonzert"],
+      ["17:00", "17:45", "Im Taxi Rauchen", "Wohnzimmerkonzert"],
+    ],
+  },
+};
+
+// Minuten seit Mitternacht des Festivaltags; Zeiten vor 06:00 zählen zur Nacht danach.
+const toMin = (hhmm) => {
+  const [h, m] = hhmm.split(":").map(Number);
+  let v = h * 60 + m;
+  if (h < 6) v += 1440;
+  return v;
+};
+const fmt = (min) => {
+  const m = ((min % 1440) + 1440) % 1440;
+  return String(Math.floor(m / 60)).padStart(2, "0") + ":" + String(m % 60).padStart(2, "0");
+};
+const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+// Daten normalisieren
+const model = {};
+for (const [dayId, day] of Object.entries(DAYS)) {
+  const events = [];
+  for (const st of STAGES) {
+    for (const [a, b, name, note] of day.acts[st.id] || []) {
+      events.push({ stage: st, start: toMin(a), end: toMin(b), name, note });
+    }
+  }
+  for (const [a, b, name, note] of day.extra) {
+    events.push({ stage: EXTRA_STAGE, start: toMin(a), end: toMin(b), name, note, extra: true });
+  }
+  for (const e of events) if (e.end <= e.start) e.end += 1440;
+  events.forEach((e, i) => (e.id = dayId + "-" + i));
+  // Überschneidungen (nur mit anderen Bühnen)
+  for (const e of events) {
+    e.parallel = events
+      .filter((o) => o !== e && o.stage !== e.stage && o.start < e.end && e.start < o.end)
+      .map((o) => ({ ev: o, minutes: Math.min(e.end, o.end) - Math.max(e.start, o.start) }))
+      .sort((x, y) => x.ev.start - y.ev.start);
+  }
+  const first = Math.floor(Math.min(...events.map((e) => e.start)) / 60) * 60;
+  const last = Math.ceil(Math.max(...events.map((e) => e.end)) / 60) * 60;
+  model[dayId] = { ...day, events, first, last };
+}
+
+const grid = document.getElementById("grid");
+const head = document.getElementById("grid-head");
+const body = document.getElementById("grid-body");
+const extraSec = document.getElementById("extra");
+const extraList = document.getElementById("extra-list");
+const panel = document.getElementById("panel");
+const panelContent = document.getElementById("panel-content");
+let current = "fr";
+let byId = {};
+
+head.innerHTML = '<div></div>' + STAGES.map(
+  (s) => `<div class="stage-head" data-stage="${s.id}" style="--c:${s.color}"><span>${s.name}</span></div>`
+).join("");
+
+function slotHTML(e) {
+  const n = e.parallel.length;
+  const label = `${e.name}${e.note ? " – " + e.note : ""}, ${e.stage.name}, ${fmt(e.start)} bis ${fmt(e.end)} Uhr` +
+    (n ? `, ${n} parallel` : "");
+  return `<button class="slot" data-id="${e.id}" style="--c:${e.stage.color};--s:${e.start - model[current].first};--d:${e.end - e.start}" aria-label="${esc(label)}">
+      <span class="t">${fmt(e.start)}–${fmt(e.end)}</span>
+      <span class="n">${esc(e.name)}</span>
+      ${e.note ? `<span class="x">${esc(e.note)}</span>` : ""}
+      ${n ? `<span class="ov" title="${n} Acts parallel auf anderen Bühnen">∥ ${n}</span>` : ""}
+    </button>`;
+}
+
+function render(dayId) {
+  current = dayId;
+  const d = model[dayId];
+  byId = Object.fromEntries(d.events.map((e) => [e.id, e]));
+  const span = d.last - d.first;
+  body.style.setProperty("--span", span);
+  body.style.setProperty("--offset", 0);
+
+  let axis = '<div class="axis">';
+  for (let t = d.first; t <= d.last; t += 60) {
+    axis += `<div class="hour" style="top:calc(${t - d.first} * var(--ppm) * 1px + 8px)">${fmt(t)}</div>`;
+  }
+  axis += "</div>";
+
+  const lanes = STAGES.map((s) =>
+    `<div class="lane" data-stage="${s.id}">` +
+      d.events.filter((e) => e.stage === s).map(slotHTML).join("") +
+    "</div>"
+  ).join("");
+
+  body.innerHTML = axis + lanes + '<div class="band" id="band"></div><div class="now" id="now" hidden><span></span></div>';
+
+  const extras = d.events.filter((e) => e.extra);
+  extraSec.hidden = !extras.length;
+  extraList.innerHTML = extras.map(slotHTML).join("");
+
+  document.querySelectorAll(".tab").forEach((t) => t.setAttribute("aria-selected", String(t.dataset.day === dayId)));
+  closePanel();
+  updateNow();
+}
+
+function focusEvent(id) {
+  const e = byId[id];
+  if (!e) return;
+  const d = model[current];
+  grid.classList.add("focus");
+  document.querySelectorAll(".slot").forEach((el) => {
+    el.classList.toggle("is-active", el.dataset.id === id);
+    el.classList.toggle("is-parallel", e.parallel.some((p) => p.ev.id === el.dataset.id));
+  });
+  const band = document.getElementById("band");
+  band.style.top = `calc(${e.start - d.first} * var(--ppm) * 1px + 8px)`;
+  band.style.height = `calc(${e.end - e.start} * var(--ppm) * 1px)`;
+
+  panel.style.setProperty("--c", e.stage.color);
+  panelContent.innerHTML = `
+    <div class="stage">${e.stage.name}</div>
+    <h3>${esc(e.name)}</h3>
+    ${e.note ? `<div class="when">${esc(e.note)}</div>` : ""}
+    <div class="when">${d.label} · ${fmt(e.start)}–${fmt(e.end)} Uhr (${e.end - e.start} Min.)</div>
+    <h4>Parallel auf anderen Bühnen</h4>
+    ${e.parallel.length
+      ? `<ul>${e.parallel.map((p) => `
+          <li data-id="${p.ev.id}" style="--c:${p.ev.stage.color}" tabindex="0">
+            <span class="dot"></span><span class="nm">${esc(p.ev.name)}${p.ev.note ? " <small style='font-weight:400;opacity:.7'>" + esc(p.ev.note) + "</small>" : ""}</span><span class="tm">${fmt(p.ev.start)}–${fmt(p.ev.end)}</span>
+            <span class="sg">${p.ev.stage.name}</span><span class="om">${p.minutes} Min. Überschneidung</span>
+          </li>`).join("")}</ul>`
+      : `<p class="none">Keine Überschneidung – hier verpasst du nichts.</p>`}
+  `;
+  panel.classList.add("open");
+  panel.setAttribute("aria-hidden", "false");
+}
+
+function closePanel() {
+  grid.classList.remove("focus");
+  document.querySelectorAll(".slot.is-active, .slot.is-parallel").forEach((el) => el.classList.remove("is-active", "is-parallel"));
+  panel.classList.remove("open");
+  panel.setAttribute("aria-hidden", "true");
+}
+
+// "Jetzt"-Linie & LIVE-Markierung (Festivalzeit = Europe/Berlin)
+function berlinNow() {
+  const parts = Object.fromEntries(new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Europe/Berlin", year: "numeric", month: "2-digit", day: "2-digit",
+    hour: "2-digit", minute: "2-digit", hourCycle: "h23",
+  }).formatToParts(new Date()).map((p) => [p.type, p.value]));
+  return { date: `${parts.year}-${parts.month}-${parts.day}`, min: +parts.hour * 60 + +parts.minute };
+}
+function festivalMinute(dayId) {
+  const now = berlinNow();
+  const d = model[dayId];
+  if (now.date === d.date && now.min >= 360) return now.min;
+  const prev = new Date(d.date + "T12:00:00Z"); prev.setUTCDate(prev.getUTCDate() + 1);
+  if (now.date === prev.toISOString().slice(0, 10) && now.min < 360) return now.min + 1440;
+  return null;
+}
+function updateNow() {
+  const d = model[current];
+  const m = festivalMinute(current);
+  const line = document.getElementById("now");
+  document.querySelectorAll(".slot").forEach((el) => {
+    const e = byId[el.dataset.id];
+    el.classList.toggle("is-live", m !== null && e && e.start <= m && m < e.end);
+  });
+  if (!line) return;
+  if (m !== null && m >= d.first && m <= d.last) {
+    line.hidden = false;
+    line.style.top = `calc(${m - d.first} * var(--ppm) * 1px + 8px)`;
+    line.querySelector("span").textContent = fmt(m);
+  } else {
+    line.hidden = true;
+  }
+}
+
+function pickInitialDay() {
+  const h = location.hash.replace("#", "");
+  if (model[h]) return h;
+  if (festivalMinute("sa") !== null) return "sa";
+  return "fr";
+}
+
+document.querySelectorAll(".tab").forEach((t) =>
+  t.addEventListener("click", () => {
+    history.replaceState(null, "", "#" + t.dataset.day);
+    render(t.dataset.day);
+  })
+);
+document.addEventListener("click", (ev) => {
+  const slot = ev.target.closest(".slot");
+  const li = ev.target.closest(".panel li[data-id]");
+  if (slot) {
+    slot.classList.contains("is-active") ? closePanel() : focusEvent(slot.dataset.id);
+  } else if (li) {
+    focusEvent(li.dataset.id);
+    document.querySelector(`.slot[data-id="${li.dataset.id}"]`)?.scrollIntoView({ behavior: "smooth", block: "center" });
+  } else if (!ev.target.closest(".panel")) {
+    closePanel();
+  }
+});
+document.addEventListener("keydown", (ev) => {
+  if (ev.key === "Escape") closePanel();
+  if (ev.key === "Enter" && ev.target.matches(".panel li[data-id]")) ev.target.click();
+});
+document.getElementById("panel-close").addEventListener("click", closePanel);
+
+render(pickInitialDay());
+setInterval(updateNow, 30000);
+</script>
+</body>
+</html>
